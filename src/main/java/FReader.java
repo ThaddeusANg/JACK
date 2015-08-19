@@ -38,5 +38,4 @@ public class FReader {
   public ArrayList<String> getContent(){
     return content;
   }
- 
 }

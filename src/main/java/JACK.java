@@ -31,10 +31,9 @@ public class JACK{
 	
 	public void pathHash(JSONObject content, String path){
 		Set<String> keys =content.keySet(); 
-		System.out.println(content.keySet());
+
 		for(String key:keys){
-			System.out.println(content.get(key).getClass());
-			System.out.println(content.get(key));
+
 			path+="."+key;
 			if(content.get(key).getClass().equals(JSONArray.class))
 			{
@@ -42,28 +41,32 @@ public class JACK{
 			}else if(content.get(key).getClass().equals(JSONObject.class)){
 				pathHash(content.getJSONObject(key),path);
 			}else{
+				System.out.println("--output below--");
 				System.out.println("Node Value of "+key+": "+content.get(key));
 				System.out.println(path);
+				System.out.println("--end output--");
 				PathMap.put(key, path);
 			}
 		}
 	}
 	
 	public void pathHash(JSONArray content, String path){
+		String incremPath = path;
 		for(int key=0;key<content.length();key++){
 			path+="["+key+"]";
-			System.out.println(content.get(key).getClass());
-			System.out.println(content.get(key));
 			if(content.get(key).getClass().equals(JSONArray.class))
 			{
 				pathHash(content.getJSONArray(key), path);
 			}else if(content.get(key).getClass().equals(JSONObject.class)){
 				pathHash(content.getJSONObject(key), path);
 			}else{
+				System.out.println("--output below--");
 				System.out.println("Node Value of "+key+": "+content.get(key));
 				System.out.println(path);
+				System.out.println("--end output--");
 				PathMap.put(key, path);
 			}
+			path=incremPath;
 		}
 	}
 	public String nodePath(String key){
