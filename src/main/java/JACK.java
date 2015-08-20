@@ -9,7 +9,7 @@ import org.json.*;
 
 
 public class JACK{
-	HashMap PathMap = new HashMap();
+	HashMap<String, ArrayList<String>> PathMap = new HashMap<String, ArrayList<String>>();
 	public JACK(){
 
 	}
@@ -47,28 +47,16 @@ public class JACK{
 				System.out.println(path);
 				
 				if(PathMap.containsKey(key)){
-					System.out.println(PathMap.get(key).getClass());
-					if(PathMap.get(key).getClass().equals(ArrayList.class)){
-						ArrayList<String> paths = (ArrayList<String>) PathMap.get(key);
-						paths.add(path);
-						PathMap.put(key, paths);
-						ArrayList<String> temp = (ArrayList<String>)PathMap.get(key);
-						System.out.println("Size "+temp.size());
-						for(String row:temp){
-							System.out.println(key+" array in kv pair "+row);
-						}
-					}else{
-					ArrayList<String> paths = new ArrayList<String>();
-					paths.add((String) PathMap.get(key));
-					paths.add(path);
-					PathMap.put(key, paths);
-					for(String row:(ArrayList<String>)PathMap.get(key)){
-						System.out.println(key+" array in kv pair "+row);
+					PathMap.get(key).add(path);
+					for(String row:PathMap.get(key)){
+						System.out.println(row);
 					}
-					}
-				}
-				PathMap.put(key, path);
+				}else{
+				ArrayList<String> push = new ArrayList<String>();
+				push.add(path);
+				PathMap.put(key, push);
 				System.out.println("--end output--");
+				}
 			}
 		}
 	}
@@ -88,25 +76,19 @@ public class JACK{
 				System.out.println(path);
 				
 				if(PathMap.containsKey(key)){
-					if(PathMap.get(key).getClass().equals(ArrayList.class)){
-						ArrayList<String> paths = (ArrayList<String>) PathMap.get(key);
-						paths.add(path);
-						PathMap.put(key, paths);
-					}else{
-					ArrayList<String> paths = new ArrayList<String>();
-					paths.add((String) PathMap.get(key));
-					paths.add(path);
-					PathMap.put(key, paths);
-					}
+					PathMap.get(key).add(path);
+				}else{
+				ArrayList<String> push = new ArrayList<String>();
+				push.add(path);
+				PathMap.put(key+"", push);
 				}
-				PathMap.put(key, path);
 				System.out.println("--end output--");
 			}
 			path=incremPath;
 		}
 	}
-	public String nodePath(String key){
-		return (String) PathMap.get(key);
+	public ArrayList<String> nodePath(String key){
+		return (ArrayList<String>) PathMap.get(key);
 	}
 }
 
